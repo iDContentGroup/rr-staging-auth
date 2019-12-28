@@ -3,8 +3,17 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "npm run start:staging",
+    "start:staging": "ng serve --open --progress",
+    "start:prod": "ng serve --open --progress -c=serve-production",
+    "build": "npm run build:staging",
+    "build:staging": "ng build --prod --aot -c=build-staging",
+    "build:prod": "ng build --prod --aot -c=build-production",
+    "deploy": "npm run deploy:staging",
+    "deploy:staging": "firebase use staging && firebase deploy --only hosting",
+    "deploy:prod": "npm run deploy:prod:full",
+    "deploy:prod:full": "npm run build:prod && npm run deploy:prod:hosting",
+    "deploy:prod:hosting": "firebase use prod && firebase deploy --only hosting",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -19,6 +28,8 @@
     "@angular/platform-browser": "~8.2.14",
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
+    "@moomoomamoo/rocket-rounding-types": "^0.4.6",
+    "firebase": "^7.6.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

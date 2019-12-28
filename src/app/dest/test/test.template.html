@@ -1,0 +1,42 @@
+<div>
+    <p>{{ mode || "no mode" }}</p>
+    <p>{{ oobCode || "no oobCode" }}</p>
+    <p>{{ apiKey || "no apiKey" }}</p>
+    <p>{{ continueUrl || "no continueUrl" }}</p>
+
+    <div class="container">
+        <div>
+            <span>Hello Auth Action Page: {{ mode || "" }}</span>
+        </div>
+    
+        <div>
+            <span *ngIf="loading">LOADING...</span>
+        </div>
+    
+        <div *ngIf="mode === 'resetPassword'">
+            <span *ngIf="finished">Password Reset finished</span>
+    
+            <ng-container *ngIf="!finished">
+                <span>Email: {{ email }}</span>
+                <input #input>
+                <button (click)="confirmNewPassword(input.value)">Confirm new password</button>
+            </ng-container>
+        </div>
+        
+        <div *ngIf="mode === 'verifyEmail'">
+            <span *ngIf="finished">Email verification finished</span>
+    
+            <div *ngIf="!finished">
+                <span>Verifying email...</span>
+            </div>
+        </div>
+
+        <div *ngIf="finished">
+            <button (click)="navigateToApp()">Continue to app</button>
+        </div>
+        
+        <div *ngIf="error">
+            <span class="error">{{ error.message }}</span>
+        </div>
+    </div>
+</div>
