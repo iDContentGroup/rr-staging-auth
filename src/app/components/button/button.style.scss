@@ -1,0 +1,21 @@
+:host ::ng-deep .add-padding {
+    .mat-button-wrapper {
+        padding-left: 32px;
+    }
+}
+
+:host ::ng-deep .rounded {
+    border-radius: 20px;
+}
+
+:host ::ng-deep .button-icon {
+    .mat-button-wrapper {
+        position: absolute;
+        top: 5px;
+        right: 8px;
+    } 
+}
+
+.rr-raised-button, .rr-raised-button-warn {
+    width: inherit;
+}

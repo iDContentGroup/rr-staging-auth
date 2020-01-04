@@ -1,0 +1,43 @@
+<ng-container *ngIf="!icon">
+<button (click)="buttonClicked.emit()" *ngIf="buttonType==='basic'" [disabled]="disabled" mat-button>
+    <rr-icon *ngIf="icon" [icon]="icon"></rr-icon>
+    {{text}}
+</button>
+<button *ngIf="(buttonType==='raised' || !buttonType) && !customColor" (click)="buttonClicked.emit()" [disabled]="disabled" mat-raised-button color="primary" class="rr-raised-button">{{text}}</button>
+<button *ngIf="(buttonType==='raised' || !buttonType) && customColor && customColor === 'warn'" (click)="buttonClicked.emit()" [disabled]="disabled" mat-raised-button color="warn" class="rr-raised-button-warn">{{text}}</button>
+</ng-container>
+
+<ng-container *ngIf="icon">
+
+<button *ngIf="(buttonType==='raised' || !buttonType) && !customColor" (click)="buttonClicked.emit()" [disabled]="disabled" mat-raised-button color="primary" class="rr-raised-button add-padding">
+    <div [style.position]="'absolute'" [style.top]="'5px'">
+        <rr-icon *ngIf="active" [icon]="activeIcon" [fill]="disabled ? 'rgba(0,0,0,0.15)' : 'white'"></rr-icon>
+        <rr-icon *ngIf="!active" [icon]="icon" [fill]="disabled ? 'rgba(0,0,0,0.15)' : (iconFill ? iconFill : lightBlack)"></rr-icon>
+    </div> {{text}}
+</button>
+<button *ngIf="(buttonType==='raised' || !buttonType) && customColor && customColor === 'warn'" (click)="buttonClicked.emit()" [disabled]="disabled" mat-raised-button color="warn" class="rr-raised-button-warn add-padding">
+    <div [style.position]="'absolute'" [style.top]="'5px'">
+        <rr-icon *ngIf="active" [icon]="activeIcon" [fill]="disabled ? 'rgba(0,0,0,0.15)' : 'white'"></rr-icon>
+        <rr-icon *ngIf="!active" [icon]="icon" [fill]="disabled ? 'rgba(0,0,0,0.15)' : (iconFill ? iconFill : lightBlack)"></rr-icon>
+    </div> {{text}}
+</button>
+
+<button (click)="buttonClicked.emit()" *ngIf="buttonType==='basic'" [disabled]="disabled" mat-button class="add-padding">
+    <div [style.position]="'absolute'" [style.top]="'5px'"><rr-icon [icon]="icon" [fill]="disabled ? 'rgba(0,0,0,0.15)' : lightBlack"></rr-icon></div> {{text}}
+</button>
+<button (click)="buttonClicked.emit()" *ngIf="buttonType==='rounded' || !buttonType" mat-flat-button [color]="customColor || 'primary'" [disabled]="disabled" class="add-padding rounded rr-rounded-button">
+    <div [style.position]="'absolute'" [style.top]="'5px'"><rr-icon [icon]="icon" [fill]="disabled ? 'rgba(0,0,0,0.15)' : 'white'"></rr-icon></div> {{text}}
+</button>
+<button (click)="buttonClicked.emit()" *ngIf="buttonType==='action'" [disabled]="disabled" mat-raised-button class="rr-action-button add-padding rounded" [color]="((active && customColor) ? customColor : (active && !customColor ? ('accent') : 'white'))">
+    <div [style.position]="'absolute'" [style.top]="'5px'">
+        <rr-icon *ngIf="active" [icon]="activeIcon" [fill]="disabled ? 'rgba(0,0,0,0.15)' : 'white'"></rr-icon>
+        <rr-icon *ngIf="!active" [icon]="icon" [fill]="disabled ? 'rgba(0,0,0,0.15)' : lightBlack"></rr-icon>
+    </div> {{active ? activeText : text}}
+</button>
+<button (click)="buttonClicked.emit()" *ngIf="buttonType==='icon' && disabled" mat-icon-button [color]="disabled" class="button-icon rr-button-icon" [disabled]="disabled">
+    <rr-icon [icon]="icon" [fill]="'rgba(0,0,0,0.15)'"></rr-icon>
+</button>
+<button (click)="buttonClicked.emit()" *ngIf="buttonType==='icon' && !disabled" mat-icon-button [color]="(customColor || 'primary')" class="button-icon rr-button-icon rr-button-icon-hover" [disabled]="disabled" [style.background-color]="backgroundColor || ''">
+    <rr-icon [icon]="icon" [fill]="iconFill || globalService.appColors.primary || 'primary'"></rr-icon>
+</button>
+</ng-container>

@@ -1,0 +1,14 @@
+<mat-form-field [style.width]="'100%'" [style.text-align]="textAlign || 'left'">
+    <!-- <ng-container *ngIf="required">
+    <input matInput [placeholder]="placeholder" [value]="value || ''" [(ngModel)]="value" (change)="valueUpdated.emit(value)" [disabled]="disabled" required>
+    </ng-container> -->
+    <input #input matInput [placeholder]="placeholder" [value]="value || ''" [(ngModel)]="value" (change)="valueUpdated.emit(value)" [disabled]="disabled" [type]="inputType || 'text'" (keydown)="triggerChange($event)" [autocomplete]="autocomplete">
+    <mat-hint *ngIf="hint && !error" [align]="'start'">{{hint}}</mat-hint>
+    <mat-hint *ngIf="error" [align]="'start'" [style.color]="'#f44336'">{{error}}</mat-hint>
+
+    <!-- <ng-container *ngIf="errorType && errorType==='email'">
+    <mat-error *ngIf="emailFormControl.hasError('email')">
+        Please enter a valid email address
+    </mat-error>
+    </ng-container> -->
+</mat-form-field>

@@ -1,1 +1,43 @@
-/* You can add global styles to this file, and also import other style files */
+@import "theme.scss";
+@include mat-core();
+@include angular-material-theme($my-theme);
+
+@import "./_variables.scss";
+
+.rr-card {
+    border: 1px solid rgba(0,0,0,0.15); //primary 100
+    border-radius: 8px;
+    padding: 16px;
+}
+
+.rr-raised-button:hover, .rr-rounded-button:hover {
+    background-color: #5ac6e5; //primary 300
+}
+.rr-raised-button-warn:hover, .rr-rounded-button-warn:hover {
+    background-color: rgba(244,67,54,0.5);
+}
+
+
+.rr-action-button:hover {
+    background-color: rgba(0,0,0,0.3);
+}
+
+.rr-button-icon-hover:hover {
+    background-color: #e3f5fb; //primary 50
+}
+
+.stretch {
+    width: 100%;
+    flex-grow: 1;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+

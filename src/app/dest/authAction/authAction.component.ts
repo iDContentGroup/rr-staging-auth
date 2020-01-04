@@ -17,6 +17,7 @@ export class AuthActionComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
+        console.log('here')
         const mode: string = this.activatedRoute.snapshot.queryParams["mode"] || "";
         const oobCode: string = this.activatedRoute.snapshot.queryParams["oobCode"] || "";
         const apiKey: string = this.activatedRoute.snapshot.queryParams["apiKey"] || "";
@@ -31,10 +32,12 @@ export class AuthActionComponent implements OnInit {
         this.link = getRRDynamicLink(link, environment.env, !!d);
 
         // window.location.replace(this.link);
-        window.location.href = this.link;
+        // window.location.href = this.link;
 
-        setTimeout(() => {
-            this.show = true;
-        }, 3000);
+        console.log(mode, oobCode, apiKey, continueUrl);
+
+        // setTimeout(() => {
+        //     this.show = true;
+        // }, 3000);
     }
 }

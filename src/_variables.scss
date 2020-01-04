@@ -1,0 +1,79 @@
+// Import material theming functions
+@import '~@angular/material/theming';
+
+$rr-blue: (
+        50 : #e3f5fb,
+        100 : #b8e7f4,
+        200 : #89d7ed,
+        300 : #5ac6e5,
+        400 : #36bae0,
+        500 : #13aeda,
+        600 : #11a7d6,
+        700 : #0e9dd0,
+        800 : #0b94cb,
+        900 : #0684c2,
+        A100 : #ecf8ff,
+        A200 : #b9e5ff,
+        A400 : #86d2ff,
+        A700 : #6cc9ff,
+        contrast: (
+                50 : $black-87-opacity,
+                100 : $black-87-opacity,
+                200 : $black-87-opacity,
+                300 : $black-87-opacity,
+                400 : $black-87-opacity,
+                500 : #ffffff,
+                600 : #ffffff,
+                700 : #ffffff,
+                800 : #ffffff,
+                900 : #ffffff,
+                A100 : $black-87-opacity,
+                A200 : $black-87-opacity,
+                A400 : $black-87-opacity,
+                A700 : $black-87-opacity,
+        )
+);
+
+$rr-black: (
+        50 : #E4E4E4,
+        100 : #BCBCBC,
+        200 : #909090,
+        300 : #646464,
+        400 : #424242,
+        500 : $black-87-opacity,
+        600 : #1D1D1D,
+        700 : #181818,
+        800 : #141414,
+        900 : #0B0B0B,
+        A100 : #a6a6a6,
+        A200 : #8c8c8c,
+        A400 : #737373,
+        A700 : #666666,
+        contrast: (
+                50 : $black-87-opacity,
+                100 : $black-87-opacity,
+                200 : $black-87-opacity,
+                300 : #ffffff,
+                400 : #ffffff,
+                500 : #ffffff,
+                600 : #ffffff,
+                700 : #ffffff,
+                800 : #ffffff,
+                900 : #ffffff,
+                A100 : $black-87-opacity,
+                A200 : $black-87-opacity,
+                A400 : #ffffff,
+                A700 : #ffffff,
+        )
+);
+
+
+// Copy the palettes from your selected theme (usually theme.scss).
+$app-primary: mat-palette($rr-blue, 500, 200);
+
+// Create your Sass color vars (will be available in all the project)
+$primary: mat-color($app-primary, 500);
+$light: mat-color($app-primary, 200);
+$dark: mat-color($app-primary, 900);
+
+$rr-black: mat-color($rr-black, 500, 900)
