@@ -4,6 +4,21 @@
 
 @import "./_variables.scss";
 
+
+html, body, main {
+    height: 100% !important;
+    background-color: white;
+    color: rgba(0,0,0,0.87);
+    fill: rgba(0,0,0,0.87);
+    overflow: hidden;
+}
+
+body {
+    margin: 0 !important;
+    font-family: 'Roboto', sans-serif;
+    font-size: 15px;
+}
+
 .rr-card {
     border: 1px solid rgba(0,0,0,0.15); //primary 100
     border-radius: 8px;
@@ -41,3 +56,16 @@
     flex-direction: row;
 }
 
+.mini-text {
+    font-size: 0.8em;
+}
+
+.bold-text {
+    font-weight: 600;
+}
+
+a {
+    color: $primary;
+    text-decoration: underline;
+    cursor: pointer;
+}

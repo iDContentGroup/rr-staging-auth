@@ -13,6 +13,7 @@ import { environment } from '../../../environments/environment';
 export class AuthActionComponent implements OnInit {
     link: string;
     show: boolean;
+    loading: boolean;
 
     constructor(private activatedRoute: ActivatedRoute) { }
 

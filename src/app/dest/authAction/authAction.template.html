@@ -1,4 +1,13 @@
-<div class="rr-card auth-container flex-column">
-
+<div class="parent-container">
+    <div class="rr-card auth-container flex-column">
+        <div [class]="loading ? 'transparent-overlay overlay-white' : 'transparent-overlay overlay-transparent'"></div>
+        <div class="welcome">
+            <span class="mini-text">Welcome to</span>
+            <div class="horizontal-logo">
+                <img src="../../../../assets/logos/rr_logo_horizontal_blue.png">
+            </div>
+        </div>
+    </div>
+    <rr-preloader *ngIf="loading"></rr-preloader>
 </div>
 <!-- <p *ngIf="show">Please wait for this page to redirect you or <a [href]="link">click here</a> to continue</p> -->
