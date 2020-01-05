@@ -9,8 +9,8 @@
             </div>
             <div *ngIf="!error && mode && mode==='resetPassword'" class="flex-column reset-password-div">
                 <span>Please type a new password for {{email}}</span>
-                <rr-input [placeholder]="'Create password'" [inputType]="'password'" (valueUpdated)="password = $event"></rr-input>
-                <rr-input [placeholder]="'Re-type password'"  [inputType]="'password'" (valueUpdated)="passwordValidator = $event"></rr-input>
+                <rr-input #pwInput [placeholder]="'Create password'" [inputType]="'password'" [error]="passwordInputError" (valueUpdated)="password = $event; passwordInputError = null"></rr-input>
+                <rr-input #pwConfirmInput [placeholder]="'Re-type password'"  [inputType]="'password'" [error]="passwordValidatorInputError" (valueUpdated)="passwordValidator = $event; passwordValidatorInputError = null"></rr-input>
                 <rr-button [buttonType]="'raised'" [text]="'SUBMIT'" (click)="submitForm()"></rr-button>
             </div>
             <div *ngIf="error" class="error">

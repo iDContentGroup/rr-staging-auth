@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { getRRDynamicLink } from '@moomoomamoo/rocket-rounding-types';
 import { ActivatedRoute } from '@angular/router';
@@ -7,6 +7,7 @@ import { environment } from '../../../environments/environment';
 
 import { auth } from 'firebase/app';
 import { GlobalService } from 'src/app/services/global.service';
+import { InputComponent } from 'src/app/components/input/input.component';
 
 @Component({
     selector: 'rr-auth-action',
@@ -31,6 +32,12 @@ export class AuthActionComponent implements OnInit {
 
     password: string;
     passwordValidator: string;
+
+    passwordInputError: string;
+    passwordValidatorInputError: string;
+
+    @ViewChild('pwInput', {static:false}) private pwInput: InputComponent;
+    @ViewChild('pwConfirmInput', {static: false}) private pwConfirmInput: InputComponent;
 
     constructor(private activatedRoute: ActivatedRoute, private globalService: GlobalService) { }
 
@@ -151,80 +158,77 @@ export class AuthActionComponent implements OnInit {
     }
 
     public submitForm(buttonKey: string) {
-        console.log('submit form!');
-        // if(this.loading) {
-        //     this.globalService.snackBar('Please wait.', 'red');
-        //     return;
-        // }
-        // this.loading = true;
-        // if(buttonKey==='submit') {
-        //     const errors = [];
-        //     const password = this.authInputs[0];
-        //     const passwordConfirm = this.authInputs[1];
-            
-        //     // password follows our rules
-        //     if(!password.value || !passwordConfirm.value) {
-        //         if(!password.value) {
-        //             password.error = "Password required."
-        //             errors.push(password.error);
-        //         }
-        //         if(!passwordConfirm.value) {
-        //             passwordConfirm.error = "Please confim password."
-        //             errors.push(passwordConfirm.error);
-        //         }
-        //     }
-        //     else if(password.value !== passwordConfirm.value) {
-        //         passwordConfirm.error = 'Passwords do not match'
-        //         errors.push(passwordConfirm.error);
-        //     }
-        //     if(errors && errors.length) {
-        //         this.globalService.snackBar(errors[0], 'red');
-        //         this.loading = false;
-        //         return;
-        //     }
-        //     else {
-        //         return this.authService.confirmPasswordReset(this.actionCode, password.value).then(() =>{
-        //             return this.authService.signInWithEmailAndPassword(this.emailAddress, password.value).then(() => {
-        //                 this.globalService.snackBar('Password successfully updated!', 'green');
+        if(this.loading) {
+            this.globalService.snackBar('Please wait.', 'red');
+            return;
+        }
+        this.loading = true;
 
-        //                 this.helpersService.navigateWithHostname(this.continueUrl).catch(err => {
-        //                     console.error(err);
-        //                 })
-        //                 this.loading = false;
-        //             })
-        //         }).catch(err => {
-        //             // source: https://firebase.google.com/docs/reference/js/firebase.auth.Auth#confirm-password-reset
-        //             let msg = null;
-        //             if(err.code === 'auth/expired-action-code') {
-        //                 msg = 'Password reset code expired. Please try again.'
-        //             }
-        //             else if(err.code === 'auth/invalid-action-code') {
-        //                 msg = 'Oops, something went wrong. Please try again.'
-        //             }
-        //             else if(err.code === 'auth/user-disabled') {
-        //                 msg = 'Oops, this account is suspended. Please reach out to your admin.'
-        //             }
-        //             else if(err.code === 'auth/user-not-found') {
-        //                 msg = 'Oops, no account was found that matches the provided credentials.'
-        //             }
-        //             else if(err.code === 'auth/weak-password') {
-        //                 msg = 'Your password must be at least 6 characters.'
-        //             }
-        //             console.error(err);
-        //             if(msg) {
-        //                 this.globalService.setWarningObj({warningMessage: msg});
-        //                 return;
-        //             }
-        //             this.globalService.snackBar('Oops. Something went wrong. Please try again.', 'red');
+        const errors = [];
 
-        //             this.globalService.handleErrorObject(err, "warningBar");
-        //         }).then(() => {
-        //             this.loading = false;
-        //         })
-        //     }
-        // }
-        // else {
-        //     console.error('Unexpected button key: ', buttonKey);
-        // }
+        const pwVal = this.pwInput.input.nativeElement.value;
+        const pwConfirmVal = this.pwConfirmInput.input.nativeElement.value;
+
+        // password follows our rules
+        if(!pwVal || !pwConfirmVal) {
+            if(!pwVal) {
+                this.passwordInputError = "Password required."
+                errors.push(this.passwordInputError);
+            }
+            if(!pwConfirmVal) {
+                this.passwordValidatorInputError = "Please confim password."
+                errors.push(this.passwordValidatorInputError);
+            }
+        }
+        else if(pwVal !== pwConfirmVal) {
+            this.passwordInputError = 'Passwords do not match'
+            errors.push(this.passwordInputError);
+        }
+        if(errors && errors.length) {
+            this.globalService.snackBar(errors[0], 'red');
+            this.loading = false;
+            return;
+        }
+        else {
+            // TODO
+            // return this.authService.confirmPasswordReset(this.actionCode, password.value).then(() =>{
+            //     return this.authService.signInWithEmailAndPassword(this.emailAddress, password.value).then(() => {
+            //         this.globalService.snackBar('Password successfully updated!', 'green');
+
+            //         this.helpersService.navigateWithHostname(this.continueUrl).catch(err => {
+            //             console.error(err);
+            //         })
+            //         this.loading = false;
+            //     })
+            // }).catch(err => {
+            //     // source: https://firebase.google.com/docs/reference/js/firebase.auth.Auth#confirm-password-reset
+            //     let msg = null;
+            //     if(err.code === 'auth/expired-action-code') {
+            //         msg = 'Password reset code expired. Please try again.'
+            //     }
+            //     else if(err.code === 'auth/invalid-action-code') {
+            //         msg = 'Oops, something went wrong. Please try again.'
+            //     }
+            //     else if(err.code === 'auth/user-disabled') {
+            //         msg = 'Oops, this account is suspended. Please reach out to your admin.'
+            //     }
+            //     else if(err.code === 'auth/user-not-found') {
+            //         msg = 'Oops, no account was found that matches the provided credentials.'
+            //     }
+            //     else if(err.code === 'auth/weak-password') {
+            //         msg = 'Your password must be at least 6 characters.'
+            //     }
+            //     console.error(err);
+            //     if(msg) {
+            //         this.globalService.setWarningObj({warningMessage: msg});
+            //         return;
+            //     }
+            //     this.globalService.snackBar('Oops. Something went wrong. Please try again.', 'red');
+
+            //     this.globalService.handleErrorObject(err, "warningBar");
+            // }).then(() => {
+            //     this.loading = false;
+            // })
+        }
     }
 }
