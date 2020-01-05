@@ -8,7 +8,13 @@ import { environment } from '../environments/environment';
 
 import * as firebase from 'firebase/app';
 
+import { GlobalService } from '../app/services/global.service';
+import { ErrorService } from '../app/services/error.service';
+import { IconService } from '../app/services/icon.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import 'firebase/auth';
+import { MatSnackBarModule } from '@angular/material';
 // import 'firebase/database';
 // import 'firebase/firestore';
 // import 'firebase/firestore';
@@ -25,9 +31,15 @@ firebase.initializeApp(environment.firebaseConfig);
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
-  providers: [],
+  providers: [
+    GlobalService,
+    ErrorService,
+    IconService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

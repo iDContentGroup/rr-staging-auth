@@ -7,7 +7,7 @@ import { PreloaderModule } from '../../components/preloader/preloader.module';
 import { ButtonModule } from '../../components/button/button.module';
 import { IconModule } from '../../components/icon/icon.module';
 import { InputModule } from '../../components/input/input.module';
-
+import { WarningModule } from '../../components/warning/warning.module';
 
 @NgModule({
     declarations: [
@@ -19,7 +19,8 @@ import { InputModule } from '../../components/input/input.module';
         PreloaderModule,
         IconModule,
         ButtonModule,
-        InputModule
+        InputModule,
+        WarningModule
     ]
 })
 export class AuthActionModule { }

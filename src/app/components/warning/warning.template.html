@@ -1,0 +1,13 @@
+<div class="flex-row warning-container" [style.line-height]="'2em'">
+    <div class="white-background"></div>
+    <div [class]="styleType==='warning' ? 'flex-row warning-blue' : 'flex-row warning-red'" [style.align-items]="'center'" [style.justify-content]="'space-between'">
+        <div class="flex-row" [style.align-items]="'center'">
+            <rr-icon *ngIf="warningIcon" [icon]="warningIcon"></rr-icon>
+            <div class="flex-column">
+                <span [style.font-weight]="'500'">{{warningMessage}}</span>
+                <span *ngIf="consoleWarning">{{consoleWarning}}</span>
+            </div>
+        </div>
+        <rr-button *ngIf="warningButton" [buttonType]="warningButton.button.buttonType" [text]="warningButton.button.text" (click)="warningButton.clickFunc()"></rr-button>
+    </div>
+</div>

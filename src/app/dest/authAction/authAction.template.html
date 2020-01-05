@@ -1,3 +1,4 @@
+<rr-warning *ngIf="globalService.showWarningBar" [warningMessage]="globalService.warningBarObj.warningMessage" [consoleWarning]="globalService.warningBarObj.consoleWarning" [warningIcon]="globalService.warningBarObj && globalService.warningBarObj.errorIcon" [warningButton]="globalService.warningBarObj.warningButton" [styleType]="globalService.warningBarObj && globalService.warningBarObj.warningType || 'error'" [style.width]="'100%'"></rr-warning>
 <div class="parent-container">
     <div class="rr-card auth-container flex-column">
         <div [class]="loading ? 'transparent-overlay overlay-white' : 'transparent-overlay overlay-transparent'"></div>
@@ -5,6 +6,15 @@
             <span class="mini-text">Welcome to</span>
             <div class="horizontal-logo">
                 <img src="../../../../assets/logos/rr_logo_horizontal_blue.png">
+            </div>
+            <div *ngIf="!error && mode && mode==='resetPassword'" class="flex-column reset-password-div">
+                <span>Please type a new password for {{email}}</span>
+                <rr-input [placeholder]="'Create password'" [inputType]="'password'" (valueUpdated)="password = $event"></rr-input>
+                <rr-input [placeholder]="'Re-type password'"  [inputType]="'password'" (valueUpdated)="passwordValidator = $event"></rr-input>
+                <rr-button [buttonType]="'raised'" [text]="'SUBMIT'" (click)="submitForm()"></rr-button>
+            </div>
+            <div *ngIf="error" class="error">
+                <span>{{error.message}}</span>
             </div>
         </div>
     </div>

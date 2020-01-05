@@ -10,7 +10,7 @@ export class IconService {
     availableIcons: any[];
 
     constructor( private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer ) {
-        this.availableIcons = require('../svg_files.json');
+        // this.availableIcons = require('../svg_files.json');
     }
 
     registerIcon(icon:string, iconPath:string) {

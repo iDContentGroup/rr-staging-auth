@@ -17,6 +17,7 @@
     
         .welcome {
             margin-top: 24px;
+            width: 100%;
             .mini-text {
                 margin-left: 10px;
             }
@@ -92,4 +93,20 @@
     img {
         height: 100%;
     }
+}
+
+.reset-password-div{
+    width: 100%;
+    justify-content: center;
+    span {
+        margin-top: 24px;
+        font-size: .9em;
+    }
+}
+
+.error {
+    width: 100%;
+    padding-top: 24px;
+    justify-content: center;
+    font-size: 0.9em;
 }
