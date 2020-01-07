@@ -230,4 +230,14 @@ export class AuthActionComponent implements OnInit {
             });          
         }
     }
+
+    public continueFromVerify(): void {
+        if(this.loading) {
+            this.globalService.snackBar('Please wait.', 'red');
+            return;
+        }
+        this.loading = true;
+        this.navigateToApp();
+        this.loading = false;
+    }
 }
