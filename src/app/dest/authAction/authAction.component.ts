@@ -129,6 +129,7 @@ export class AuthActionComponent implements OnInit {
         // parameter.
         // Try to apply the email verification code.
         return auth().applyActionCode(this.oobCode).then(resp => {
+            console.log(resp);
             // Email address has been verified.
             this.finished = true;
         }).catch(error => {
@@ -136,6 +137,8 @@ export class AuthActionComponent implements OnInit {
             // again.
             console.error(error);
             this.error = error;
+        }).then(() => {
+            this.loading = false;
         });
     }
 

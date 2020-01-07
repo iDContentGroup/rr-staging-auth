@@ -13,7 +13,7 @@
                 <rr-input #pwConfirmInput [placeholder]="'Re-type password'"  [inputType]="'password'" [error]="passwordValidatorInputError" (valueUpdated)="passwordValidator = $event; passwordValidatorInputError = null"></rr-input>
                 <rr-button [buttonType]="'raised'" [text]="'SUBMIT'" (click)="submitForm()"></rr-button>
             </div>
-            <div *ngIf="!error && mod && mode==='verifyEmail'" class="flex-column verify-email-div">
+            <div *ngIf="!error && mode && mode==='verifyEmail'" class="flex-column verify-email-div">
                 <span [style.margin-bottom]="'24px'">Thanks! You’ve successfully confirmed your email address {{email}}</span>
                 <rr-button [buttonType]="'raised'" [text]="'CONTINUE'" (click)="continueFromVerify()"></rr-button>
             </div> 
