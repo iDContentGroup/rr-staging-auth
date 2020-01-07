@@ -53,7 +53,7 @@ export class AuthActionComponent implements OnInit {
         this.env = this.apiKey === 'AIzaSyAbYLrGKg9l9s3ShrFVwg8PeUxgF-z6Zds' ? 'prod' : 'staging';
 
         firebase.initializeApp({
-            apiKey: this.apiKey + 'moocow'
+            apiKey: this.apiKey
         });
 
         const e = this.env === 'prod' ? 'p' : 's';
