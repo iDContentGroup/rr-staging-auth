@@ -42,7 +42,6 @@ export class AuthActionComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute, private globalService: GlobalService) { }
 
     ngOnInit() {
-        console.log('here')
         this.mode = this.activatedRoute.snapshot.queryParams["mode"] || "";
         this.oobCode = this.activatedRoute.snapshot.queryParams["oobCode"] || "";
         this.apiKey = this.activatedRoute.snapshot.queryParams["apiKey"] || "";
@@ -108,7 +107,7 @@ export class AuthActionComponent implements OnInit {
     }
 
     public confirmNewPassword(newPassword: string): Promise<void> {
-        this.loading = true;
+        // this.loading = true;
 
         // Save the new password.
         return auth().confirmPasswordReset(this.oobCode, newPassword).then(resp => {
@@ -118,9 +117,9 @@ export class AuthActionComponent implements OnInit {
             // Error occurred during confirmation. The code might have expired or the
             // password is too weak.
             console.error(error);
-            this.error = error;
+            throw error;
         }).then(() => {
-            this.loading = false;
+            // this.loading = false;
         });
     }
 
@@ -151,10 +150,16 @@ export class AuthActionComponent implements OnInit {
     }
 
     public navigateToApp(): void {
+        console.log('nav to app');
         // Create a dynamicLink using continueUrl or generate one depending on the environment
         const url = getRRDynamicLink(this.continueUrl || (environment.env === 'prod' ? 'https://rocketrocketingapp.com' : 'https://rocket-rounding-staging.web.app'), environment.env);
         // Navigate to dynamicLink
-        window.location.href = url;
+        console.log(url);
+        this.show = true;
+        this.link = url;
+        setTimeout(() => {
+            window.location.href = url;
+        }, 1);
     }
 
     public submitForm(buttonKey: string) {
@@ -190,45 +195,39 @@ export class AuthActionComponent implements OnInit {
             return;
         }
         else {
-            // TODO
-            // return this.authService.confirmPasswordReset(this.actionCode, password.value).then(() =>{
-            //     return this.authService.signInWithEmailAndPassword(this.emailAddress, password.value).then(() => {
-            //         this.globalService.snackBar('Password successfully updated!', 'green');
+            this.loading = true;
+            return this.confirmNewPassword(pwVal).then(() => {
+                this.globalService.snackBar('Password successfully updated!', 'green');
+                this.navigateToApp();
+            }).catch(err => {
+                 // source: https://firebase.google.com/docs/reference/js/firebase.auth.Auth#confirm-password-reset
+                let msg = null;
+                if(err.code === 'auth/expired-action-code') {
+                    msg = 'Password reset code expired. Please try again.'
+                }
+                else if(err.code === 'auth/invalid-action-code') {
+                    msg = 'Oops, something went wrong. Please try again.'
+                }
+                else if(err.code === 'auth/user-disabled') {
+                    msg = 'Oops, this account is suspended. Please reach out to your admin.'
+                }
+                else if(err.code === 'auth/user-not-found') {
+                    msg = 'Oops, no account was found that matches the provided credentials.'
+                }
+                else if(err.code === 'auth/weak-password') {
+                    msg = 'Your password must be at least 6 characters.'
+                }
+                console.error(err);
+                if(msg) {
+                    this.globalService.setWarningObj({warningMessage: msg});
+                    return;
+                }
+                this.globalService.snackBar('Oops. Something went wrong. Please try again.', 'red');
 
-            //         this.helpersService.navigateWithHostname(this.continueUrl).catch(err => {
-            //             console.error(err);
-            //         })
-            //         this.loading = false;
-            //     })
-            // }).catch(err => {
-            //     // source: https://firebase.google.com/docs/reference/js/firebase.auth.Auth#confirm-password-reset
-            //     let msg = null;
-            //     if(err.code === 'auth/expired-action-code') {
-            //         msg = 'Password reset code expired. Please try again.'
-            //     }
-            //     else if(err.code === 'auth/invalid-action-code') {
-            //         msg = 'Oops, something went wrong. Please try again.'
-            //     }
-            //     else if(err.code === 'auth/user-disabled') {
-            //         msg = 'Oops, this account is suspended. Please reach out to your admin.'
-            //     }
-            //     else if(err.code === 'auth/user-not-found') {
-            //         msg = 'Oops, no account was found that matches the provided credentials.'
-            //     }
-            //     else if(err.code === 'auth/weak-password') {
-            //         msg = 'Your password must be at least 6 characters.'
-            //     }
-            //     console.error(err);
-            //     if(msg) {
-            //         this.globalService.setWarningObj({warningMessage: msg});
-            //         return;
-            //     }
-            //     this.globalService.snackBar('Oops. Something went wrong. Please try again.', 'red');
-
-            //     this.globalService.handleErrorObject(err, "warningBar");
-            // }).then(() => {
-            //     this.loading = false;
-            // })
+                this.globalService.handleErrorObject(err, "warningBar");
+            }).then(() => {
+                this.loading = false;
+            });          
         }
     }
 }

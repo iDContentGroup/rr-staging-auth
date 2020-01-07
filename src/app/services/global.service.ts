@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { isValidID, getWhyIDIsInvalid, IError } from '@moomoomamoo/rocket-rounding-types';
 import { Button } from '../components/button/button.component';
 import { MatSnackBar } from '@angular/material';
-import { ErrorService } from './error.service';
 
 export interface WarningBarObj {
     warningMessage: string;
@@ -25,7 +24,7 @@ export class GlobalService {
     warningBarObj: WarningBarObj;
     showWarningBar: boolean;
 
-    constructor(private snack: MatSnackBar, private errorService: ErrorService) {
+    constructor(private snack: MatSnackBar) {
 
         this.appColors = {
             primary: '#13aeda',
@@ -113,20 +112,27 @@ export class GlobalService {
  
     // TODO: [v2] [Improve] on logging errors and showcasing errors to end users
     public handleErrorObject(err: any, display: 'warningBar' | 'snackbar', displayTime?: number): void {
-        let iError: IError = err;
+        // let iError: IError = err;
 
         // if(err.error) {
         //     iError = err.error;
         // } else {
         //     iError = err;
         // }
-        const newError = this.errorService.getIError(err, iError);
-        console.error(newError);
+
         if(display==='warningBar') {
-            this.setWarningObj({warningMessage: this.errorService.getErrorMessage(newError)});
+            this.setWarningObj({warningMessage: err.error});
         } else if(display==='snackbar') {
-            this.snackBar(this.errorService.getErrorMessage(newError), 'green', displayTime);
+            this.snackBar(err.error, 'red', displayTime);
         }
+
+        // const newError = this.errorService.getIError(err, iError);
+        // console.error(newError);
+        // if(display==='warningBar') {
+        //     this.setWarningObj({warningMessage: this.errorService.getErrorMessage(newError)});
+        // } else if(display==='snackbar') {
+        //     this.snackBar(this.errorService.getErrorMessage(newError), 'green', displayTime);
+        // }
     }
 
     public setWarningObj(obj?: WarningBarObj): Promise<void> {

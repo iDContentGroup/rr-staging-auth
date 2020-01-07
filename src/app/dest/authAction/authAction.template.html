@@ -1,6 +1,6 @@
 <rr-warning *ngIf="globalService.showWarningBar" [warningMessage]="globalService.warningBarObj.warningMessage" [consoleWarning]="globalService.warningBarObj.consoleWarning" [warningIcon]="globalService.warningBarObj && globalService.warningBarObj.errorIcon" [warningButton]="globalService.warningBarObj.warningButton" [styleType]="globalService.warningBarObj && globalService.warningBarObj.warningType || 'error'" [style.width]="'100%'"></rr-warning>
 <div class="parent-container">
-    <div class="rr-card auth-container flex-column">
+    <div *ngIf="!show" class="rr-card auth-container flex-column">
         <div [class]="loading ? 'transparent-overlay overlay-white' : 'transparent-overlay overlay-transparent'"></div>
         <div class="welcome">
             <span class="mini-text">Welcome to</span>
@@ -8,7 +8,7 @@
                 <img src="../../../../assets/logos/rr_logo_horizontal_blue.png">
             </div>
             <div *ngIf="!error && mode && mode==='resetPassword'" class="flex-column reset-password-div">
-                <span>Please type a new password for {{email}}</span>
+                <span [style.margin-bottom]="'24px'">Please type a new password for {{email}}</span>
                 <rr-input #pwInput [placeholder]="'Create password'" [inputType]="'password'" [error]="passwordInputError" (valueUpdated)="password = $event; passwordInputError = null"></rr-input>
                 <rr-input #pwConfirmInput [placeholder]="'Re-type password'"  [inputType]="'password'" [error]="passwordValidatorInputError" (valueUpdated)="passwordValidator = $event; passwordValidatorInputError = null"></rr-input>
                 <rr-button [buttonType]="'raised'" [text]="'SUBMIT'" (click)="submitForm()"></rr-button>
@@ -18,6 +18,9 @@
             </div>
         </div>
     </div>
-    <rr-preloader *ngIf="loading"></rr-preloader>
+    <p *ngIf="show">Please wait for this page to redirect you or <a [href]="link">click here</a> to continue</p>
+    <div class="preloader">
+        <rr-preloader *ngIf="loading"></rr-preloader>
+    </div>
 </div>
-<!-- <p *ngIf="show">Please wait for this page to redirect you or <a [href]="link">click here</a> to continue</p> -->
+
