@@ -3,9 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { getRRDynamicLink } from '@moomoomamoo/rocket-rounding-types';
 import { ActivatedRoute } from '@angular/router';
 
-import { environment } from '../../../environments/environment';
+import * as firebase from 'firebase/app';
 
-import { auth } from 'firebase/app';
 import { GlobalService } from 'src/app/services/global.service';
 import { InputComponent } from 'src/app/components/input/input.component';
 
@@ -15,6 +14,8 @@ import { InputComponent } from 'src/app/components/input/input.component';
     styleUrls: ['./authAction.style.scss']
 })
 export class AuthActionComponent implements OnInit {
+    env: 'prod' | 'staging';
+
     link: string;
     show: boolean;
 
@@ -39,7 +40,7 @@ export class AuthActionComponent implements OnInit {
     @ViewChild('pwInput', {static:false}) private pwInput: InputComponent;
     @ViewChild('pwConfirmInput', {static: false}) private pwConfirmInput: InputComponent;
 
-    constructor(private activatedRoute: ActivatedRoute, private globalService: GlobalService) { }
+    constructor(private activatedRoute: ActivatedRoute, public globalService: GlobalService) { }
 
     ngOnInit() {
         this.mode = this.activatedRoute.snapshot.queryParams["mode"] || "";
@@ -47,13 +48,21 @@ export class AuthActionComponent implements OnInit {
         this.apiKey = this.activatedRoute.snapshot.queryParams["apiKey"] || "";
         this.continueUrl = this.activatedRoute.snapshot.queryParams["continueUrl"] || "";
         const d: string = this.activatedRoute.snapshot.queryParams["d"] || "";
-        const e = environment.env === 'prod' ? 'p' : 's';
 
-        const base = environment.env === 'prod' ? 'https://rocketroundingapp.com' : 'https://rocket-rounding-staging.web.app';
+        // Get env by checking firebase public api key (check if it's production, it not, assume it's staging)
+        this.env = this.apiKey === 'AIzaSyAbYLrGKg9l9s3ShrFVwg8PeUxgF-z6Zds' ? 'prod' : 'staging';
+
+        firebase.initializeApp({
+            apiKey: this.apiKey
+        });
+
+        const e = this.env === 'prod' ? 'p' : 's';
+
+        const base = this.env === 'prod' ? 'https://rocketroundingapp.com' : 'https://rocket-rounding-staging.web.app';
 
         const link = `${base}/#/auth/action?mode=${this.mode}&oobCode=${this.oobCode}&apiKey=${this.apiKey}&lang=en&continueUrl=${this.continueUrl}&e=${e}`;
 
-        this.link = getRRDynamicLink(link, environment.env, !!d);
+        this.link = getRRDynamicLink(link, this.env, !!d);
 
         // window.location.replace(this.link);
         // window.location.href = this.link;
@@ -94,7 +103,7 @@ export class AuthActionComponent implements OnInit {
         this.email = null;
 
         // Verify the password reset code is valid.
-        return auth().verifyPasswordResetCode(this.oobCode).then(email => {
+        return firebase.auth().verifyPasswordResetCode(this.oobCode).then(email => {
             this.email = email;
         }).catch(error => {
             // Invalid or expired action code. Ask user to try to reset the password
@@ -110,7 +119,7 @@ export class AuthActionComponent implements OnInit {
         // this.loading = true;
 
         // Save the new password.
-        return auth().confirmPasswordReset(this.oobCode, newPassword).then(resp => {
+        return firebase.auth().confirmPasswordReset(this.oobCode, newPassword).then(resp => {
             // Password reset has been confirmed and new password updated.
             this.finished = true;
         }).catch(error => {
@@ -128,7 +137,7 @@ export class AuthActionComponent implements OnInit {
 
         // parameter.
         // Try to apply the email verification code.
-        return auth().applyActionCode(this.oobCode).then(resp => {
+        return firebase.auth().applyActionCode(this.oobCode).then(resp => {
             console.log(resp);
             // Email address has been verified.
             this.finished = true;
@@ -155,7 +164,7 @@ export class AuthActionComponent implements OnInit {
     public navigateToApp(): void {
         console.log('nav to app');
         // Create a dynamicLink using continueUrl or generate one depending on the environment
-        const url = getRRDynamicLink(this.continueUrl || (environment.env === 'prod' ? 'https://rocketrocketingapp.com' : 'https://rocket-rounding-staging.web.app'), environment.env);
+        const url = getRRDynamicLink(this.continueUrl || (this.env === 'prod' ? 'https://rocketrocketingapp.com' : 'https://rocket-rounding-staging.web.app'), this.env);
         // Navigate to dynamicLink
         console.log(url);
         this.show = true;
@@ -165,7 +174,7 @@ export class AuthActionComponent implements OnInit {
         }, 1);
     }
 
-    public submitForm(buttonKey: string) {
+    public submitForm(): Promise<void> {
         if(this.loading) {
             this.globalService.snackBar('Please wait.', 'red');
             return;

@@ -8,16 +8,7 @@ import { decorateModuleRef } from './dev-decorateModuleRef';
 
 export const environment: Environment = {
     env: 'staging',
-    decorateModuleRef: decorateModuleRef,
-    firebaseConfig: {
-        "apiKey": "AIzaSyAKS2Wld9W9sTcsi9m3w8CjRwt1Av3lBFo",
-        "authDomain": "rocket-rounding-staging.firebaseapp.com",
-        "databaseURL": "https://rocket-rounding-staging.firebaseio.com",
-        "projectId": "rocket-rounding-staging",
-        "storageBucket": "rocket-rounding-staging.appspot.com",
-        "messagingSenderId": "575984349635",
-        "appId": "1:575984349635:web:febaf7eb94a5e161ed4d76"
-    }
+    decorateModuleRef: decorateModuleRef
 }
 
 /*

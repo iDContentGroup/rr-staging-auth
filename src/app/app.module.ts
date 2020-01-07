@@ -12,17 +12,15 @@ import { GlobalService } from '../app/services/global.service';
 import { IconService } from '../app/services/icon.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import 'firebase/auth';
 import { MatSnackBarModule } from '@angular/material';
+
+import 'firebase/auth';
 // import 'firebase/database';
 // import 'firebase/firestore';
 // import 'firebase/firestore';
 // import 'firebase/storage';
 // import 'firebase/messaging';
 // import 'firebase/functions';
-
-// Initialize Firebase
-firebase.initializeApp(environment.firebaseConfig);
 
 @NgModule({
   declarations: [

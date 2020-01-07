@@ -1,6 +1,6 @@
 {
   "projects": {
     "staging": "rocket-rounding-staging-auth",
-    "prod": "rocket-rounding-prod-auth"
+    "prod": "rocket-rounding-auth"
   }
 }
