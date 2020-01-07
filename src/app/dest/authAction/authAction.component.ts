@@ -95,6 +95,8 @@ export class AuthActionComponent implements OnInit {
                 message: "bad mode"
             };
         }
+
+        this.setNavigateToAppUrl();
     }
 
     public handleResetPassword(): Promise<void> {
@@ -162,16 +164,28 @@ export class AuthActionComponent implements OnInit {
     }
 
     public navigateToApp(): void {
+        // this.link = 'www.google.com';
+        // this.show = true;
+        // window.location.href = this.link;
+
         console.log('nav to app');
         // Create a dynamicLink using continueUrl or generate one depending on the environment
-        const url = getRRDynamicLink(this.continueUrl || (this.env === 'prod' ? 'https://rocketrocketingapp.com' : 'https://rocket-rounding-staging.web.app'), this.env);
+        const url = getRRDynamicLink(this.continueUrl || (this.env === 'prod' ? 'https://rocketroundingapp.com' : 'https://rocket-rounding-staging.web.app'), this.env);
         // Navigate to dynamicLink
         console.log(url);
-        this.show = true;
         this.link = url;
-        setTimeout(() => {
-            window.location.href = url;
-        }, 1);
+        window.location.href = url;
+
+        // setTimeout(() => {
+        //     this.show = true;
+        // }, 3000);
+    }
+
+    private setNavigateToAppUrl() {
+        // const url = getRRDynamicLink(this.continueUrl || (environment.env === 'prod' ? 'https://rocketroundingapp.com' : 'https://rocket-rounding-staging.web.app'), environment.env);
+        // this.link = url;
+        // console.log(this.link);
+        this.link = "https://rocketroundingstaging.page.link?link=https%3A%2F%2Frocket-rounding-staging.web.app%2F%23%2F&apn=com.company.rocketrounding&ibi=com.company.rocketrounding&isi=1492951155&efr=1&moo=cow";
     }
 
     public submitForm(): Promise<void> {
@@ -210,7 +224,9 @@ export class AuthActionComponent implements OnInit {
             this.loading = true;
             return this.confirmNewPassword(pwVal).then(() => {
                 this.globalService.snackBar('Password successfully updated!', 'green');
-                this.navigateToApp();
+                this.setNavigateToAppUrl();
+                this.show = true;
+                // this.navigateToApp();
             }).catch(err => {
                  // source: https://firebase.google.com/docs/reference/js/firebase.auth.Auth#confirm-password-reset
                 let msg = null;
