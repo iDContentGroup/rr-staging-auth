@@ -14,17 +14,18 @@
                 <rr-button [buttonType]="'raised'" [text]="'SUBMIT'" (click)="submitForm()"></rr-button>
             </div>
             <div *ngIf="!error && mode && mode==='verifyEmail'" class="flex-column verify-email-div">
-                <span [style.margin-bottom]="'24px'">Thanks! You’ve successfully confirmed your email address {{email}}</span>
+                <span [style.margin-bottom]="'24px'">Thanks! You’ve successfully confirmed your email address.</span>
                 <rr-button [buttonType]="'raised'" [text]="'CONTINUE'" (click)="continueFromVerify()"></rr-button>
             </div> 
             <div *ngIf="error" class="error">
                 <span>{{error.message}}</span>
             </div>
         </div>
+        <a href="https://rocketroundingstaging.page.link?link=https%3A%2F%2Frocket-rounding-staging.web.app%2F%23%2F&apn=com.company.rocketrounding&ibi=com.company.rocketrounding&isi=1492951155&efr=1">TEST</a>
     </div>
-    <p *ngIf="show">Please wait for this page to redirect you or <a [href]="link">click here</a> to continue</p>
     <div class="preloader">
         <rr-preloader *ngIf="loading"></rr-preloader>
     </div>
 </div>
 
+<!-- <p>Please wait for this page to redirect you or <a [href]="link">click here</a> to continue</p> -->
