@@ -20,9 +20,8 @@
                 <rr-button (click)="goToLink()" [buttonType]="'raised'" [text]="'CONTINUE'"></rr-button>
             </div>
             <div *ngIf="!error && mode && mode==='verifyEmail'" class="flex-column verify-email-div">
-                <ng-container *ngIf="!success"></ng-container>
                 <span [style.margin-bottom]="'24px'">Thanks! You’ve successfully confirmed your email address.</span>
-                <rr-button *ngIf="show" (click)="goToLink()" [buttonType]="'raised'" [text]="'CONTINUE'"></rr-button>
+                <rr-button (click)="goToLink()" [buttonType]="'raised'" [text]="'CONTINUE'"></rr-button>
             </div> 
         </div>
         <div [style.margin-top]="'24px'">
