@@ -36,6 +36,7 @@ export class AuthActionComponent implements OnInit {
 
     passwordInputError: string;
     passwordValidatorInputError: string;
+    success: boolean;
 
     @ViewChild('pwInput', {static:false}) private pwInput: InputComponent;
     @ViewChild('pwConfirmInput', {static: false}) private pwConfirmInput: InputComponent;
@@ -92,8 +93,10 @@ export class AuthActionComponent implements OnInit {
             default:
             // Error: invalid mode.
             this.error = {
+                key: 'badMode',
                 message: "bad mode"
             };
+            this.globalService.setWarningObj({warningMessage: 'Invalid auth mode. Please try again. If problem persists, reach out to your admin.'})
         }
 
         this.setNavigateToAppUrl();
@@ -111,7 +114,7 @@ export class AuthActionComponent implements OnInit {
             // Invalid or expired action code. Ask user to try to reset the password
             // again.
             console.error(error);
-            this.error = error;
+            this.handleError(error);
         }).then(() => {
             this.loading = false;
         });
@@ -147,7 +150,7 @@ export class AuthActionComponent implements OnInit {
             // Code is invalid or expired. Ask the user to verify their email address
             // again.
             console.error(error);
-            this.error = error;
+            this.handleError(error);
         }).then(() => {
             this.loading = false;
         });
@@ -163,29 +166,9 @@ export class AuthActionComponent implements OnInit {
         return;
     }
 
-    public navigateToApp(): void {
-        // this.link = 'www.google.com';
-        // this.show = true;
-        // window.location.href = this.link;
-
-        console.log('nav to app');
-        // Create a dynamicLink using continueUrl or generate one depending on the environment
+    private setNavigateToAppUrl(): void {
         const url = getRRDynamicLink(this.continueUrl || (this.env === 'prod' ? 'https://rocketroundingapp.com' : 'https://rocket-rounding-staging.web.app'), this.env);
-        // Navigate to dynamicLink
-        console.log(url);
         this.link = url;
-        window.location.href = url;
-
-        // setTimeout(() => {
-        //     this.show = true;
-        // }, 3000);
-    }
-
-    private setNavigateToAppUrl() {
-        // const url = getRRDynamicLink(this.continueUrl || (environment.env === 'prod' ? 'https://rocketroundingapp.com' : 'https://rocket-rounding-staging.web.app'), environment.env);
-        // this.link = url;
-        // console.log(this.link);
-        this.link = "https://rocketroundingstaging.page.link?link=https%3A%2F%2Frocket-rounding-staging.web.app%2F%23%2F&apn=com.company.rocketrounding&ibi=com.company.rocketrounding&isi=1492951155&efr=1&moo=cow";
     }
 
     public submitForm(): Promise<void> {
@@ -224,48 +207,47 @@ export class AuthActionComponent implements OnInit {
             this.loading = true;
             return this.confirmNewPassword(pwVal).then(() => {
                 this.globalService.snackBar('Password successfully updated!', 'green');
-                this.setNavigateToAppUrl();
-                this.show = true;
-                // this.navigateToApp();
+                this.success = true;
             }).catch(err => {
                  // source: https://firebase.google.com/docs/reference/js/firebase.auth.Auth#confirm-password-reset
-                let msg = null;
-                if(err.code === 'auth/expired-action-code') {
-                    msg = 'Password reset code expired. Please try again.'
-                }
-                else if(err.code === 'auth/invalid-action-code') {
-                    msg = 'Oops, something went wrong. Please try again.'
-                }
-                else if(err.code === 'auth/user-disabled') {
-                    msg = 'Oops, this account is suspended. Please reach out to your admin.'
-                }
-                else if(err.code === 'auth/user-not-found') {
-                    msg = 'Oops, no account was found that matches the provided credentials.'
-                }
-                else if(err.code === 'auth/weak-password') {
-                    msg = 'Your password must be at least 6 characters.'
-                }
-                console.error(err);
-                if(msg) {
-                    this.globalService.setWarningObj({warningMessage: msg});
-                    return;
-                }
-                this.globalService.snackBar('Oops. Something went wrong. Please try again.', 'red');
-
-                this.globalService.handleErrorObject(err, "warningBar");
+                this.handleError(err);
             }).then(() => {
                 this.loading = false;
             });          
         }
     }
 
-    public continueFromVerify(): void {
-        if(this.loading) {
-            this.globalService.snackBar('Please wait.', 'red');
+    public handleError(err):void {
+        this.error = err;
+
+        let msg = null;
+        if(err.code === 'auth/expired-action-code') {
+            msg = 'Password reset code expired. Please try again.'
+        }
+        else if(err.code === 'auth/invalid-action-code') {
+            msg = 'This link is invalid or has expired. Please try again.'
+        }
+        else if(err.code === 'auth/user-disabled') {
+            msg = 'Oops, this account is suspended. Please reach out to your admin.'
+        }
+        else if(err.code === 'auth/user-not-found') {
+            msg = 'Oops, no account was found that matches the provided credentials.'
+        }
+        else if(err.code === 'auth/weak-password') {
+            msg = 'Your password must be at least 6 characters.'
+        }
+        console.error(err);
+        if(msg) {
+            this.globalService.setWarningObj({warningMessage: msg});
             return;
         }
-        this.loading = true;
-        this.navigateToApp();
-        this.loading = false;
+        // this.globalService.snackBar('Oops. Something went wrong. Please try again.', 'red');
+
+        this.globalService.handleErrorObject(err, "warningBar");
     }
+
+    public goToLink() {
+        window.location.href = this.link;
+    }
+
 }

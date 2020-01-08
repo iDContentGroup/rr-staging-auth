@@ -7,25 +7,30 @@
             <div class="horizontal-logo">
                 <img src="../../../../assets/logos/rr_logo_horizontal_blue.png">
             </div>
-            <div *ngIf="!error && mode && mode==='resetPassword'" class="flex-column reset-password-div">
-                <span [style.margin-bottom]="'24px'">Please type a new password for {{email}}</span>
-                <rr-input #pwInput [placeholder]="'Create password'" [inputType]="'password'" [error]="passwordInputError" (valueUpdated)="password = $event; passwordInputError = null"></rr-input>
-                <rr-input #pwConfirmInput [placeholder]="'Re-type password'"  [inputType]="'password'" [error]="passwordValidatorInputError" (valueUpdated)="passwordValidator = $event; passwordValidatorInputError = null"></rr-input>
-                <rr-button [buttonType]="'raised'" [text]="'SUBMIT'" (click)="submitForm()"></rr-button>
+            <!-- <form *ngIf="!error && mode && mode==='resetPassword'" action="/" method="post"> -->
+                <div *ngIf="!success && !error && mode && mode==='resetPassword'" class="flex-column reset-password-div">
+                    <span [style.margin-bottom]="'24px'">Please type a new password for {{email}}</span>
+                    <rr-input #pwInput [placeholder]="'Create password'" [inputType]="'password'" [error]="passwordInputError" (valueUpdated)="password = $event; passwordInputError = null"></rr-input>
+                    <rr-input #pwConfirmInput [placeholder]="'Re-type password'"  [inputType]="'password'" [error]="passwordValidatorInputError" (valueUpdated)="passwordValidator = $event; passwordValidatorInputError = null"></rr-input>
+                    <rr-button [buttonType]="'raised'" [text]="'SUBMIT'" (click)="submitForm()"></rr-button>
+                </div>
+            <!-- </form> -->
+            <div *ngIf="!error && success && mode && mode==='resetPassword'" class="flex-column reset-password-div">
+                <span [style.margin-bottom]="'24px'">You successfully reset the password for {{email}}!</span>
+                <rr-button (click)="goToLink()" [buttonType]="'raised'" [text]="'CONTINUE'"></rr-button>
             </div>
             <div *ngIf="!error && mode && mode==='verifyEmail'" class="flex-column verify-email-div">
+                <ng-container *ngIf="!success"></ng-container>
                 <span [style.margin-bottom]="'24px'">Thanks! You’ve successfully confirmed your email address.</span>
-                <rr-button [buttonType]="'raised'" [text]="'CONTINUE'" (click)="continueFromVerify()"></rr-button>
+                <rr-button *ngIf="show" (click)="goToLink()" [buttonType]="'raised'" [text]="'CONTINUE'"></rr-button>
             </div> 
-            <div *ngIf="error" class="error">
-                <span>{{error.message}}</span>
-            </div>
         </div>
-        <a href="https://rocketroundingstaging.page.link?link=https%3A%2F%2Frocket-rounding-staging.web.app%2F%23%2F&apn=com.company.rocketrounding&ibi=com.company.rocketrounding&isi=1492951155&efr=1">TEST</a>
+        <div [style.margin-top]="'24px'">
+            <a [style.font-size]="'0.8em'" [href]="link">Go home</a>
+        </div>
     </div>
     <div class="preloader">
         <rr-preloader *ngIf="loading"></rr-preloader>
     </div>
 </div>
 
-<!-- <p>Please wait for this page to redirect you or <a [href]="link">click here</a> to continue</p> -->
