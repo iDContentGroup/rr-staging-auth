@@ -17,6 +17,7 @@ export class AuthActionComponent implements OnInit {
     env: 'prod' | 'staging';
 
     link: string;
+    home: string;
     show: boolean;
 
     mode: string;
@@ -168,6 +169,11 @@ export class AuthActionComponent implements OnInit {
 
     private setNavigateToAppUrl(): void {
         const url = getRRDynamicLink(this.continueUrl || (this.env === 'prod' ? 'https://rocketroundingapp.com' : 'https://rocket-rounding-staging.web.app'), this.env);
+        if(this.env==='prod') {
+            this.home = 'https://rocketroundingapp.com';
+        } else {
+            this.home = 'https://rocket-rounding-staging.web.app';
+        }
         this.link = url;
     }
 

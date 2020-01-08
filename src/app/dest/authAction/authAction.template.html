@@ -7,14 +7,14 @@
             <div class="horizontal-logo">
                 <img src="../../../../assets/logos/rr_logo_horizontal_blue.png">
             </div>
-            <!-- <form *ngIf="!error && mode && mode==='resetPassword'" action="/" method="post"> -->
-                <div *ngIf="!success && mode && mode==='resetPassword'" class="flex-column reset-password-div">
-                    <span [style.margin-bottom]="'24px'">Please type a new password for {{email}}</span>
+            <div *ngIf="!success && mode && mode==='resetPassword'" class="flex-column reset-password-div">
+                <span [style.margin-bottom]="'24px'">Please type a new password for {{email}}</span>
+                <form>
                     <rr-input #pwInput [placeholder]="'Create password'" [inputType]="'password'" [error]="passwordInputError" (valueUpdated)="password = $event; passwordInputError = null"></rr-input>
                     <rr-input #pwConfirmInput [placeholder]="'Re-type password'"  [inputType]="'password'" [error]="passwordValidatorInputError" (valueUpdated)="passwordValidator = $event; passwordValidatorInputError = null"></rr-input>
-                    <rr-button [buttonType]="'raised'" [text]="'SUBMIT'" (click)="submitForm()"></rr-button>
-                </div>
-            <!-- </form> -->
+                </form>
+                <rr-button [buttonType]="'raised'" [text]="'SUBMIT'" (click)="submitForm()"></rr-button>
+            </div>
             <div *ngIf="!error && success && mode && mode==='resetPassword'" class="flex-column reset-password-div">
                 <span [style.margin-bottom]="'24px'">You successfully reset the password for {{email}}!</span>
                 <rr-button (click)="goToLink()" [buttonType]="'raised'" [text]="'CONTINUE'"></rr-button>
@@ -25,7 +25,7 @@
             </div> 
         </div>
         <div [style.margin-top]="'24px'">
-            <a [style.font-size]="'0.8em'" [href]="link">Go home</a>
+            <a [style.font-size]="'0.8em'" [href]="home">Go home</a>
         </div>
     </div>
     <div class="preloader">
