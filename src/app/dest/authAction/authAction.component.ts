@@ -218,20 +218,22 @@ export class AuthActionComponent implements OnInit {
     }
 
     public handleError(err):void {
-        this.error = err;
-
         let msg = null;
         if(err.code === 'auth/expired-action-code') {
             msg = 'Password reset code expired. Please try again.'
+            this.error = err;
         }
         else if(err.code === 'auth/invalid-action-code') {
             msg = 'This link is invalid or has expired. Please try again.'
+            this.error = err;
         }
         else if(err.code === 'auth/user-disabled') {
             msg = 'Oops, this account is suspended. Please reach out to your admin.'
+            this.error = err;
         }
         else if(err.code === 'auth/user-not-found') {
             msg = 'Oops, no account was found that matches the provided credentials.'
+            this.error = err;
         }
         else if(err.code === 'auth/weak-password') {
             msg = 'Your password must be at least 6 characters.'

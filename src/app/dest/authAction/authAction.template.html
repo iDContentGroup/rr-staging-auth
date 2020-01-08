@@ -8,7 +8,7 @@
                 <img src="../../../../assets/logos/rr_logo_horizontal_blue.png">
             </div>
             <!-- <form *ngIf="!error && mode && mode==='resetPassword'" action="/" method="post"> -->
-                <div *ngIf="!success && !error && mode && mode==='resetPassword'" class="flex-column reset-password-div">
+                <div *ngIf="!success && mode && mode==='resetPassword'" class="flex-column reset-password-div">
                     <span [style.margin-bottom]="'24px'">Please type a new password for {{email}}</span>
                     <rr-input #pwInput [placeholder]="'Create password'" [inputType]="'password'" [error]="passwordInputError" (valueUpdated)="password = $event; passwordInputError = null"></rr-input>
                     <rr-input #pwConfirmInput [placeholder]="'Re-type password'"  [inputType]="'password'" [error]="passwordValidatorInputError" (valueUpdated)="passwordValidator = $event; passwordValidatorInputError = null"></rr-input>
