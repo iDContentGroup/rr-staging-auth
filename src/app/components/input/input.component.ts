@@ -20,7 +20,7 @@ export class InputComponent implements OnInit {
 
     @Output() valueUpdated: EventEmitter<any> = new EventEmitter;
 
-    @ViewChild('input', {static: false}) input: ElementRef;
+    @ViewChild('input') input: ElementRef;
 
     constructor( ) { }
 

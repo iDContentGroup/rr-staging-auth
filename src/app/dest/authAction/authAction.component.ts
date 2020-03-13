@@ -39,8 +39,8 @@ export class AuthActionComponent implements OnInit {
     passwordValidatorInputError: string;
     success: boolean;
 
-    @ViewChild('pwInput', {static:false}) private pwInput: InputComponent;
-    @ViewChild('pwConfirmInput', {static: false}) private pwConfirmInput: InputComponent;
+    @ViewChild('pwInput') private pwInput: InputComponent;
+    @ViewChild('pwConfirmInput') private pwConfirmInput: InputComponent;
 
     constructor(private activatedRoute: ActivatedRoute, public globalService: GlobalService) { }
 
