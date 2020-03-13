@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { isValidID, getWhyIDIsInvalid, IError } from '@moomoomamoo/rocket-rounding-types';
 import { Button } from '../components/button/button.component';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface WarningBarObj {
     warningMessage: string;

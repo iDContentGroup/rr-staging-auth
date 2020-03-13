@@ -12,7 +12,7 @@ import { GlobalService } from '../app/services/global.service';
 import { IconService } from '../app/services/icon.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatSnackBarModule } from '@angular/material';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import 'firebase/auth';
 // import 'firebase/database';
