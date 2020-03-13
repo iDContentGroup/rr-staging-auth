@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --open --progress",
-    "build": "ng build --prod --aot -c=build-production",
+    "build": "ng build --aot -c=build-production",
     "deploy": "npm run deploy:staging",
     "deploy:staging": "firebase use staging && firebase deploy --only hosting",
     "deploy:prod": "firebase use prod && firebase deploy --only hosting",

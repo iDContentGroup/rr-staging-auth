@@ -109,7 +109,7 @@
               "browserTarget": "rocket-rounding:build:serve-production"
             },
             "build-production": {
-                "browserTarget": "rocket-rounding:build:build-production"
+              "browserTarget": "rocket-rounding:build:build-production"
             }
           }
         },
@@ -162,6 +162,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "rr-staging-auth"
+    }
+  },
+  "defaultProject": "rr-staging-auth",
+  "cli": {
+    "analytics": "e7f96632-a2b2-488c-a5eb-e161349aa148"
+  }
 }
