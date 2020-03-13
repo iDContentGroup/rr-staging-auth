@@ -7,23 +7,29 @@
             <div class="horizontal-logo">
                 <img src="../../../../assets/logos/rr_logo_horizontal_blue.png">
             </div>
-            <div *ngIf="!error && mode && mode==='resetPassword'" class="flex-column reset-password-div">
+            <div *ngIf="!success && mode && mode==='resetPassword'" class="flex-column reset-password-div">
                 <span [style.margin-bottom]="'24px'">Please type a new password for {{email}}</span>
-                <rr-input #pwInput [placeholder]="'Create password'" [inputType]="'password'" [error]="passwordInputError" (valueUpdated)="password = $event; passwordInputError = null"></rr-input>
-                <rr-input #pwConfirmInput [placeholder]="'Re-type password'"  [inputType]="'password'" [error]="passwordValidatorInputError" (valueUpdated)="passwordValidator = $event; passwordValidatorInputError = null"></rr-input>
+                <form>
+                    <rr-input #pwInput [placeholder]="'Create password'" [inputType]="'password'" [error]="passwordInputError" (valueUpdated)="password = $event; passwordInputError = null"></rr-input>
+                    <rr-input #pwConfirmInput [placeholder]="'Re-type password'"  [inputType]="'password'" [error]="passwordValidatorInputError" (valueUpdated)="passwordValidator = $event; passwordValidatorInputError = null"></rr-input>
+                </form>
                 <rr-button [buttonType]="'raised'" [text]="'SUBMIT'" (click)="submitForm()"></rr-button>
             </div>
-            <div *ngIf="!error && mode && mode==='verifyEmail'" class="flex-column verify-email-div">
-                <span [style.margin-bottom]="'24px'">Thanks! You’ve successfully confirmed your email address {{email}}</span>
-                <rr-button [buttonType]="'raised'" [text]="'CONTINUE'" (click)="continueFromVerify()"></rr-button>
-            </div> 
-            <div *ngIf="error" class="error">
-                <span>{{error.message}}</span>
+            <div *ngIf="!error && success && mode && mode==='resetPassword'" class="flex-column reset-password-div">
+                <span [style.margin-bottom]="'24px'">You successfully reset the password for {{email}}!</span>
+                <rr-button (click)="goToLink()" [buttonType]="'raised'" [text]="'CONTINUE'"></rr-button>
             </div>
+            <div *ngIf="!error && mode && mode==='verifyEmail'" class="flex-column verify-email-div">
+                <span [style.margin-bottom]="'24px'">Thanks! You’ve successfully confirmed your email address.</span>
+                <rr-button (click)="goToLink()" [buttonType]="'raised'" [text]="'CONTINUE'"></rr-button>
+            </div> 
+        </div>
+        <div [style.margin-top]="'24px'">
+            <a [style.font-size]="'0.8em'" [href]="home">Go home</a>
         </div>
     </div>
-    <p *ngIf="show">Please wait for this page to redirect you or <a [href]="link">click here</a> to continue</p>
     <div class="preloader">
         <rr-preloader *ngIf="loading"></rr-preloader>
     </div>
 </div>
+
