@@ -45,14 +45,16 @@ export class AuthActionComponent implements OnInit {
     constructor(private activatedRoute: ActivatedRoute, public globalService: GlobalService) { }
 
     ngOnInit() {
+        // Get env by checking firebase public api key (check if it's production, it not, assume it's staging)
+        this.env = this.apiKey === 'AIzaSyAbYLrGKg9l9s3ShrFVwg8PeUxgF-z6Zds' ? 'prod' : 'staging';
+
+        const base = this.env === 'prod' ? 'https://rocketroundingapp.com' : 'https://rocket-rounding-staging.web.app';
+
         this.mode = this.activatedRoute.snapshot.queryParams["mode"] || "";
         this.oobCode = this.activatedRoute.snapshot.queryParams["oobCode"] || "";
         this.apiKey = this.activatedRoute.snapshot.queryParams["apiKey"] || "";
-        this.continueUrl = this.activatedRoute.snapshot.queryParams["continueUrl"] || "";
+        this.continueUrl = this.activatedRoute.snapshot.queryParams["continueUrl"] || base;
         const d: string = this.activatedRoute.snapshot.queryParams["d"] || "";
-
-        // Get env by checking firebase public api key (check if it's production, it not, assume it's staging)
-        this.env = this.apiKey === 'AIzaSyAbYLrGKg9l9s3ShrFVwg8PeUxgF-z6Zds' ? 'prod' : 'staging';
 
         firebase.initializeApp({
             apiKey: this.apiKey
@@ -60,20 +62,9 @@ export class AuthActionComponent implements OnInit {
 
         const e = this.env === 'prod' ? 'p' : 's';
 
-        const base = this.env === 'prod' ? 'https://rocketroundingapp.com' : 'https://rocket-rounding-staging.web.app';
-
         const link = `${base}/#/auth/action?mode=${this.mode}&oobCode=${this.oobCode}&apiKey=${this.apiKey}&lang=en&continueUrl=${this.continueUrl}&e=${e}`;
 
         this.link = getRRDynamicLink(link, this.env, !!d);
-
-        // window.location.replace(this.link);
-        // window.location.href = this.link;
-
-        // console.log(mode, oobCode, apiKey, continueUrl);
-
-        // setTimeout(() => {
-        //     this.show = true;
-        // }, 3000);
 
         // source: https://firebase.google.com/docs/auth/custom-email-handler
 
